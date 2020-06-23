@@ -15,12 +15,12 @@ class UARTService(blesync_server.Service):
         bluetooth.UUID("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"),
         bluetooth.FLAG_WRITE,
         buffer_size=100,
-        append=True
+        buffer_append=True
     )
 
     characteristics = (_tx, _rx)
 
-    on_message = _rx.on_message
+    on_message = _rx.on_write
 
-    def send(self, conn_handle, message):
-        self._tx.notify(conn_handle, message)
+    def send(self, conn_handle, data):
+        self._tx.notify(conn_handle, data)
